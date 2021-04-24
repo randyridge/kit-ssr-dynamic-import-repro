@@ -4,8 +4,12 @@ const preprocess = require('svelte-preprocess');
 module.exports = {
 	// Consult https://github.com/sveltejs/svelte-preprocess
 	// for more information about preprocessors
-	preprocess: preprocess(),
-
+	preprocess: preprocess({
+		defaults: {
+			script: 'ts',
+			style: 'postcss'
+		}
+	}),
 	kit: {
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte'
