@@ -1,38 +1,65 @@
-# create-svelte
+# install
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm init svelte@next
-
-# create a new project in my-app
-npm init svelte@next my-app
+```
+pnpm i
+pnpm dev
 ```
 
-> Note: the `@next` is temporary
+# review
 
-## Developing
+`src/routes/index.svelte`:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+```
+<script context="module">
+	import WidgetSelector from '$lib/WidgetSelector.svelte';
+	import type { LoadOutput } from '@sveltejs/kit/types/page';
+	export const load = (): LoadOutput => {
+		return {
+			props: {
+				widgets: ['WidgetA', 'WidgetB', 'WidgetC']
+			}
+		};
+	};
+</script>
 
-```bash
-npm run dev
+<script>
+	export let widgets: string[];
+</script>
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+<h1>Widgets</h1>
+{#each widgets as widget, index}
+	<div>{index}: <WidgetSelector {widget} /></div>
+{/each}
 ```
 
-## Building
+`src/lib/WidgetSelector.svelte`:
 
-Before creating a production version of your app, install an [adapter](https://kit.svelte.dev/docs#adapters) for your target environment. Then:
+```
+<script lang="ts">
+	export let widget: string;
+	const loadWidget = async (widget: string) => {
+		switch (widget) {
+			case 'WidgetA':
+				return await import('$lib/WidgetA.svelte');
+			case 'WidgetB':
+				return await import('$lib/WidgetB.svelte');
+			case 'WidgetC':
+				return await import('$lib/WidgetC.svelte');
+		}
+	};
+</script>
 
-```bash
-npm run build
+{#await loadWidget(widget) then c}
+	<svelte:component this={c.default} />
+{/await}
 ```
 
-> You can preview the built app with `npm run preview`, regardless of whether you installed an adapter. This should _not_ be used to serve your app in production.
+# client side result:
+
+![Client side](./result.jpg)
+
+# server side result:
+
+```
+<div>0: </div><div>1: </div><div>2: </div>
+```
