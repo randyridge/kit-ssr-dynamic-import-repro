@@ -51,6 +51,8 @@ pnpm dev
 
 {#await loadWidget(widget) then c}
 	<svelte:component this={c.default} />
+{:catch error}
+	error: {error}
 {/await}
 ```
 
@@ -61,5 +63,7 @@ pnpm dev
 # server side result:
 
 ```html
-<div>0: </div><div>1: </div><div>2: </div>
+<div>0:</div>
+<div>1:</div>
+<div>2:</div>
 ```
