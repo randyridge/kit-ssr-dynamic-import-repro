@@ -1,6 +1,6 @@
 # install
 
-```
+```bash
 pnpm i
 pnpm dev
 ```
@@ -9,7 +9,7 @@ pnpm dev
 
 `src/routes/index.svelte`:
 
-```
+```svelte
 <script context="module">
 	import WidgetSelector from '$lib/WidgetSelector.svelte';
 	import type { LoadOutput } from '@sveltejs/kit/types/page';
@@ -34,7 +34,7 @@ pnpm dev
 
 `src/lib/WidgetSelector.svelte`:
 
-```
+```svelte
 <script lang="ts">
 	export let widget: string;
 	const loadWidget = async (widget: string) => {
@@ -60,6 +60,6 @@ pnpm dev
 
 # server side result:
 
-```
+```html
 <div>0: </div><div>1: </div><div>2: </div>
 ```
