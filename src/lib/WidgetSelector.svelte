@@ -15,4 +15,6 @@
 
 {#await loadWidget(widget) then c}
 	<svelte:component this={c.default} />
+{:catch error}
+	error {error}
 {/await}
